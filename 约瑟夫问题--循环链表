@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define INF 0x3f3f3f3f
+#define maxn 200000+50
+#define maxm 30000
+#define ll long long
+const int MOD = 10000000;
+#define mian main
+#define mem(x, b) memset(x, b, sizeof x)
+#ifndef ONLINE_JUDGE
+#define dbg(x) cout << #x << "=" << x << endl;
+#else
+#define dbg(x)
+#endif
+inline int read()
+{
+	int x = 0, f = 1;
+	char ch = getchar();
+	while (ch < '0' || ch > '9')
+	{
+		if (ch == '-')
+			f = -1;
+		ch = getchar();
+	}
+	while (ch >= '0' && ch <= '9')
+	{
+		x = 10 * x + ch - '0';
+		ch = getchar();
+	}
+	return x * f;
+}
+typedef struct node* link;
+struct node {int item; link next;};
+int main()
+{
+	int n,m,k,i;
+	scanf("%d,%d,%d",&n,&k,&m);
+	if(n<1||k<1||m<1) puts("n,m,k must bigger than 0.");
+	else if(k>n) puts("k should not bigger than n.");
+	else{
+    link t = malloc(sizeof *t), x = t;
+    t->item = 1;
+    t->next = t;
+    link tn = malloc(sizeof *tn);
+    tn=t;
+    x=t;
+    for(i=2; i<=n; i++)
+    {
+        x->next = malloc(sizeof *x);
+        x = x->next;
+        x->item = i;
+        x->next = t;
+    }
+    for(i=1;i<k;++i) tn=tn->next;
+    int cou=0;
+    x=tn;
+    while(x != x->next)
+    {
+        for(i=1; i<m-1; i++) x = x->next;
+        t = x->next;
+        cou++;
+        if(cou%10)
+        printf("%d ", t->item);
+        else printf("%d\n", t->item);
+        x->next = t->next;
+        x=t->next;
+        free(t);
+    }
+	printf("%d\n", x->item);
+}
+    return 0;
+}
